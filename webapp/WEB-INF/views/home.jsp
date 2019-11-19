@@ -11,11 +11,11 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>CineSite | Bienvenido</title>
+
 <spring:url value="/resources" var="urlPublic"></spring:url>
 <spring:url value="/" var="urlRoot"></spring:url>
 
-<link href="${urlPublic}/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="${urlPublic}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="${urlPublic}/bootstrap/css/theme.css" rel="stylesheet">
 
 </head>
@@ -124,7 +124,7 @@
 
 						<p>
 							<a class="btn btn-sm btn-primary"
-								href="detail?idMovie=${pelicula.id}&fecha=${fechaBusqueda}"
+								href="detail/${pelicula.id}/${fechaBusqueda}"
 								role="button">Consulta Horarios &raquo;</a>
 						</p>
 
