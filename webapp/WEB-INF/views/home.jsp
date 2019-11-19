@@ -1,6 +1,6 @@
 
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,8 +12,10 @@
 <meta name="author" content="">
 <title>CineSite | Bienvenido</title>
 <spring:url value="/resources" var="urlPublic"></spring:url>
+<spring:url value="/" var="urlRoot"></spring:url>
 
-<link href="${urlPublic}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${urlPublic}/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
 <link href="${urlPublic}/bootstrap/css/theme.css" rel="stylesheet">
 
 </head>
@@ -71,18 +73,27 @@
 				<h2 class="text text-center">
 					<span class="label label-success">EN CARTELERA</span>
 				</h2>
-				<form class="form-inline" action="#" method="post">
+
+				<form class="form-inline" action="${urlRoot}search" method="post">
 					<div class="form-group">
-						<label for="fecha">Fecha: </label> <select id="fecha" name="fecha"
-							class="form-control">
-							<option value="01-05-2017">01-05-2017</option>
-							<option value="02-05-2017">02-05-2017</option>
-							<option value="03-05-2017">03-05-2017</option>
-							<option value="04-05-2017">04-05-2017</option>
+						<label for="fecha">Fecha: </label>
+						<select id="fecha" name="fecha" class="form-control">
+							<c:forEach items="${fechas}" var="fecha">
+								<c:choose>
+									<c:when test="${fechaBusqueda == fecha }">
+										<option value="${fecha}" selected>${fecha}</option>
+									</c:when>
+									<c:otherwise>
+										<option value="${fecha}">${fecha}</option>						
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+
 						</select>
 					</div>
 					<button type="submit" class="btn btn-primary">Filtrar</button>
 				</form>
+
 			</div>
 		</div>
 
@@ -90,24 +101,35 @@
 		<div class="container marketing">
 
 			<div class="row">
-			
-			
-			<c:forEach items="${peliculas}" var="pelicula">
-				<div class="col-xs-12 col-sm-6 col-md-3">
-					<img class="img-rounded" src="${urlPublic}/images/${pelicula.imagen}"
-						alt="Generic placeholder image" width="150" height="200">
-					<h4>${pelicula.titulo}</h4>
-					<h4>
-						<span class="label label-default">${pelicula.clasificacion}</span> <span
-							class="label label-default">${pelicula.duracion} min</span> <span
-							class="label label-default">${pelicula.genero}</span>
-					</h4>
+
+
+				<c:forEach items="${peliculas}" var="pelicula">
+					<div class="col-xs-12 col-sm-6 col-md-3">
+						<img class="img-rounded"
+							src="${urlPublic}/images/${pelicula.imagen}"
+							alt="Generic placeholder image" width="150" height="200">
+						<h4>${pelicula.titulo}</h4>
+						<h4>
+							<span class="label label-default">${pelicula.clasificacion}</span>
+							<span class="label label-default">${pelicula.duracion} min</span>
+							<span class="label label-default">${pelicula.genero}</span>
+						</h4>
+						<%--
+					
 					<p>
-						<a class="btn btn-sm btn-primary" href="#" role="button">Consulta
+						<a class="btn btn-sm btn-primary" href="detail/${pelicula.id}/${fechaBusqueda}" role="button">Consulta
 							Horarios &raquo;</a>
 					</p>
-				</div>
-			</c:forEach>
+					 --%>
+
+						<p>
+							<a class="btn btn-sm btn-primary"
+								href="detail?idMovie=${pelicula.id}&fecha=${fechaBusqueda}"
+								role="button">Consulta Horarios &raquo;</a>
+						</p>
+
+					</div>
+				</c:forEach>
 
 
 			</div>
