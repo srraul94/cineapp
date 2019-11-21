@@ -2,7 +2,6 @@ package net.srraul94.app.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.srraul94.app.model.Banner;
 import net.srraul94.app.model.Pelicula;
+import net.srraul94.app.service.IBannersService;
 import net.srraul94.app.service.IPeliculasService;
 import net.srraul94.app.util.Utileria;
 
@@ -22,23 +23,23 @@ public class HomeController {
 
 	@Autowired
 	private IPeliculasService servicePeliculas;
+	
+	@Autowired
+	private IBannersService serviceBanners;
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
-	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String goHome() {
-		return "home";
-	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String buscar(@RequestParam("fecha") String fecha, Model model) {
 
 		List<String> listaFechas = Utileria.getNextDays(4);
 		List<Pelicula> peliculas = this.servicePeliculas.buscarTodas();
-
+		
 		model.addAttribute("fechas", listaFechas);
-		model.addAttribute("fechaBusqueda", fecha);
+		model.addAttribute("fechaBusqueda",fecha);
 		model.addAttribute("peliculas", peliculas);
+		model.addAttribute("banners", serviceBanners.buscarTodos()); 
 
 		return "home";
 	}
@@ -47,27 +48,22 @@ public class HomeController {
 	public String mostrarPrincipal(Model model) {
 
 		List<String> listaFechas = Utileria.getNextDays(4);
-		System.out.println(listaFechas);
 
 		List<Pelicula> peliculas = this.servicePeliculas.buscarTodas();
 
 		model.addAttribute("fechas", listaFechas);
 		model.addAttribute("fechaBusqueda", this.dateFormat.format(new Date()));
 		model.addAttribute("peliculas", peliculas);
+		model.addAttribute("banners", serviceBanners.buscarTodos());
 
 		return "home";
 	}
 
-	// @RequestMapping(value = "/detail",method = RequestMethod.GET)
-	// public String mostrarDetalle(Model model,@RequestParam("idMovie") int
-	// idPelicula,@RequestParam("fecha") String fecha) {
-
 	@RequestMapping(value = "/detail/{id}/{fecha}", method = RequestMethod.GET)
 	public String mostrarDetalle(Model model, @PathVariable("id") int idPelicula, @PathVariable("fecha") String fecha) {
 
-		System.out.println("idPelicula: " + idPelicula);
-		System.out.println("fecha: " + fecha);
-		model.addAttribute("pelicula", this.servicePeliculas.buscarPeliculaPorId(idPelicula));
+		
+		model.addAttribute("pelicula", servicePeliculas.buscarPeliculaPorId(idPelicula));
 
 		// TODO Buscar en la base de datos los horarios
 
