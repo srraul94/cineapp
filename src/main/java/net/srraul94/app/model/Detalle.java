@@ -1,7 +1,16 @@
 package net.srraul94.app.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Detalles")
 public class Detalle {
 
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String director;
 	private String actores;
@@ -52,5 +61,13 @@ public class Detalle {
 	public void setTrailer(String trailer) {
 		this.trailer = trailer;
 	}
+
+	@Override
+	public String toString() {
+		return "Detalle [id=" + id + ", director=" + director + ", actores=" + actores + ", sinopsis=" + sinopsis
+				+ ", trailer=" + trailer + "]";
+	}
+	
+	
 
 }
