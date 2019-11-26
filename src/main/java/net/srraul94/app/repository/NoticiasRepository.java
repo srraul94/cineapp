@@ -9,21 +9,32 @@ import org.springframework.stereotype.Repository;
 
 import net.srraul94.app.model.Noticia;
 
-
 @Repository
 //public interface NoticiasRepository extends CrudRepository<Noticia, Integer> {
 public interface NoticiasRepository extends JpaRepository<Noticia, Integer> {
-	
-	//Select * from noticias where estatus = "estatus"
+
+	// select * from Noticias
+	List<Noticia> findBy();
+
+	// select * from Noticias where estatus = ?
 	List<Noticia> findByEstatus(String estatus);
-	
-	//Select * from noticias where fecha = fecha
+
+	// where fecha = ?
 	List<Noticia> findByFecha(Date fecha);
-	
-	List<Noticia> findByEstatusAndFecha(String estatus,Date fecha);
-	
-	List<Noticia> findByEstatusOrFecha(String estatus,Date fecha);
-	
-	List<Noticia> findByFechaBetween(Date fecha1,Date fecha2);
+
+	// where estatus=? and fecha=?
+	List<Noticia> findByEstatusAndFecha(String estatus, Date fecha);
+
+	// where estatus=? or fecha=?
+	List<Noticia> findByEstatusOrFecha(String estatus, Date fecha);
+
+	// where fecha between ? and ?
+	List<Noticia> findByFechaBetween(Date fecha1, Date fecha2);
+
+	// where id between ? and ?
+	List<Noticia> findByIdBetween(int n1, int n2);
+
+	// select * from Noticias where estatus = ? order by id desc limit 3
+	public List<Noticia> findTop3ByEstatusOrderByIdDesc(String estatus);
 
 }

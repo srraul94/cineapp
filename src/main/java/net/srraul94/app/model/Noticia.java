@@ -36,7 +36,6 @@ public class Noticia {
 
 
 
-
 	public int getId() {
 		return id;
 	}
@@ -85,6 +84,7 @@ public class Noticia {
 	public void setEstatus(String estatus) {
 		this.estatus = estatus;
 	}
+	
 	
 	
 }

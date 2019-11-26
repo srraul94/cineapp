@@ -1,6 +1,8 @@
 
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +51,7 @@
 			<!-- Image Size 1140 x 250 -->
 			<div class="carousel-inner" role="listbox">
 
-				<c:forEach items="${banners}" var="banner" varStatus="loop">
+			 	<c:forEach items="${banners}" var="banner" varStatus="loop">
 					<c:choose>
 						<c:when test="${loop.index==0}">
 							<div class="item active">

@@ -3,7 +3,8 @@ import org.springframework.stereotype.Service;
 
 import net.srraul94.app.model.Noticia;
 
-@Service
+/*
+//@Service
 public class NoticiasServiceImpl implements INoticiasService{
 	
 	public NoticiasServiceImpl() {
@@ -17,3 +18,4 @@ public class NoticiasServiceImpl implements INoticiasService{
 
 	
 }
+*/

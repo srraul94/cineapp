@@ -1,7 +1,5 @@
 package net.srraul94.app.controller;
 
-
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,41 +9,46 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.srraul94.app.model.Contacto;
 import net.srraul94.app.service.IPeliculasService;
 
 @Controller
 public class ContactoController {
-	
+
+	// Inyectamos una instancia desde nuestro Root ApplicationContext
 	@Autowired
 	IPeliculasService servicePeliculas;
 
+	/**
+	 * Metodo para mostrar el formulario de contacto
+	 * 
+	 * @param contacto
+	 * @return
+	 */
 	@GetMapping("/contacto")
-	public String mostrarFormulario(@ModelAttribute Contacto contacto,Model model) {
-		
-		model.addAttribute("generos", servicePeliculas.buscarGeneros());
-		model.addAttribute("tipos", tipoNotificaciones());
-		return "formContacto";	
+	public String mostrarFormulario(@ModelAttribute("instanciaContacto") Contacto contacto) {
+		return "formContacto";
 	}
-	
+
+	/**
+	 * Metodo para guardar los datos del formulario de contacto
+	 * 
+	 * @param contacto
+	 * @param attributes
+	 * @return
+	 */
 	@PostMapping("/contacto")
-	public String guardar(@ModelAttribute Contacto contacto) {
-		
-		System.out.println(contacto);
+	public String guardar(@ModelAttribute("instanciaContacto") Contacto contacto, RedirectAttributes attributes) {
+		// El objeto de modelo contacto podria ser almacenado en la BD ...
+		System.out.println("Guardando datos del usuario: " + contacto);
+		attributes.addFlashAttribute("msg", "Gracias por enviarnos tu opinion!.");
 		return "redirect:/contacto";
 	}
-	
-	private List<String> tipoNotificaciones(){
-		
-		List<String> tipos = new LinkedList<>();
-		
-		tipos.add("Estrenos");
-		tipos.add("Promociones");
-		tipos.add("Preventas");
-		tipos.add("Noticias");
-		
-		return tipos;
-		
+
+	@ModelAttribute("generos")
+	public List<String> getGeneros() {
+		return servicePeliculas.buscarGeneros();
 	}
 }
