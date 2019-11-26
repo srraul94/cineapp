@@ -4,11 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import net.srraul94.app.model.Pelicula;
 
-@Service
+//@Service
 public class PeliculasServiceImpl implements IPeliculasService {
 
 	private List<Pelicula> lista;
@@ -66,10 +68,10 @@ public class PeliculasServiceImpl implements IPeliculasService {
 		}
 	}
 
-	@Override
-	public List<Pelicula> buscarTodas() {
-		return this.lista;
-	}
+//	@Override
+//	public List<Pelicula> buscarTodas() {
+//		return this.lista;
+//	}
 
 	@Override
 	public Pelicula buscarPeliculaPorId(int idPelicula) {
@@ -102,6 +104,18 @@ public class PeliculasServiceImpl implements IPeliculasService {
 		generos.add("Romantica");
 		
 		return generos;
+	}
+
+	@Override
+	public void eliminar(int idPelicula) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Page<Pelicula> buscarTodas(Pageable page) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

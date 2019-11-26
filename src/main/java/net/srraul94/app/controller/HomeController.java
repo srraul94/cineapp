@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,10 +33,10 @@ public class HomeController {
 
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String buscar(@RequestParam("fecha") String fecha, Model model) {
+	public String buscar(@RequestParam("fecha") String fecha, Model model, Pageable page) {
 
 		List<String> listaFechas = Utileria.getNextDays(4);
-		List<Pelicula> peliculas = this.servicePeliculas.buscarTodas();
+		Page<Pelicula> peliculas = this.servicePeliculas.buscarTodas(page);
 		
 		model.addAttribute("fechas", listaFechas);
 		model.addAttribute("fechaBusqueda",fecha);
@@ -45,11 +47,11 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String mostrarPrincipal(Model model) {
+	public String mostrarPrincipal(Model model,Pageable page) {
 
 		List<String> listaFechas = Utileria.getNextDays(4);
 
-		List<Pelicula> peliculas = this.servicePeliculas.buscarTodas();
+		Page<Pelicula> peliculas = this.servicePeliculas.buscarTodas(page);
 
 		model.addAttribute("fechas", listaFechas);
 		model.addAttribute("fechaBusqueda", this.dateFormat.format(new Date()));

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,10 +41,10 @@ public class HorariosController {
 	 * @return
 	 */
 	@GetMapping(value = "/create")
-	public String crear(@ModelAttribute Horario horario, Model model) {
+	public String crear(@ModelAttribute Horario horario, Model model,Pageable page) {
 		
 		// Ejercicio: Recuperar lista de peliculas para poblar <select>
-		List<Pelicula> listaPeliculas = servicePeliculas.buscarTodas();
+		Page<Pelicula> listaPeliculas = servicePeliculas.buscarTodas(page);
 		
 		// Ejercicio: agregar al modelo listado de peliculas
 		model.addAttribute("peliculas",listaPeliculas);
@@ -60,11 +62,11 @@ public class HorariosController {
 	 * @return
 	 */
 	@PostMapping(value = "/save")
-	public String guardar(@ModelAttribute Horario horario, BindingResult result, Model model) {				
+	public String guardar(@ModelAttribute Horario horario, BindingResult result, Model model,Pageable page) {				
 		
 		// Ejercicio: Verificar si hay errores en el Data Binding
 		if (result.hasErrors()) {
-			List<Pelicula> listaPeliculas = servicePeliculas.buscarTodas();
+			Page<Pelicula> listaPeliculas = servicePeliculas.buscarTodas(page);
 			model.addAttribute("peliculas", listaPeliculas);
 			System.out.println("Existen errores");
 			return "horarios/formHorario";

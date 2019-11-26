@@ -114,9 +114,7 @@
 		<div class="container marketing">
 
 			<div class="row">
-
-
-				<c:forEach items="${peliculas}" var="pelicula">
+				<c:forEach items="${peliculas.content}" var="pelicula">
 					<div class="col-xs-12 col-sm-6 col-md-3">
 						<img class="img-rounded"
 							src="${urlPublic}/images/${pelicula.imagen}"
