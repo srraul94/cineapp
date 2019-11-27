@@ -70,6 +70,7 @@ public class HomeController {
 		model.addAttribute("fechas", listaFechas);
 		model.addAttribute("fechaBusqueda", this.dateFormat.format(new Date()));
 		model.addAttribute("peliculas", peliculas);
+		model.addAttribute("horarios",this.serviceHorarios.buscarTodos());
 
 		return "home";
 	}

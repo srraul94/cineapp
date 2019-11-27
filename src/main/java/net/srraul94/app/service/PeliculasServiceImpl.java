@@ -118,4 +118,12 @@ public class PeliculasServiceImpl implements IPeliculasService {
 		return null;
 	}
 
+	@Override
+	public List<Pelicula> buscarActivas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
 }

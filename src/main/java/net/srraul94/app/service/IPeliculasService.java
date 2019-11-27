@@ -21,4 +21,6 @@ public interface IPeliculasService {
 	
 	
 	Page<Pelicula> buscarTodas(Pageable page);
+
+	List<Pelicula> buscarActivas();
 }

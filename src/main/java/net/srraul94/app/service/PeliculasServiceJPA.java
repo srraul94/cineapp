@@ -63,4 +63,10 @@ public class PeliculasServiceJPA implements IPeliculasService{
 		return peliculasRepo.findAll(page);
 	}
 
+	@Override
+	public List<Pelicula> buscarActivas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
