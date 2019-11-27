@@ -10,26 +10,47 @@
 
 	<http auto-config="true">
 		<!-- Declaramos todos los recursos que estaran protegidos -->
-		<intercept-url pattern="/peliculas/*" access="hasAnyAuthority('EDITOR','GERENTE')" />
-		<intercept-url pattern="/horarios/*" access="hasAnyAuthority('EDITOR','GERENTE')" />
-		<intercept-url pattern="/noticias/*" access="hasAnyAuthority('EDITOR','GERENTE')" />
-		<intercept-url pattern="/horarios/*" access="hasAnyAuthority('EDITOR','GERENTE')" />
-		<intercept-url pattern="/banners/*" access="hasAnyAuthority('GERENTE')" />
-		
-		<form-login login-page="/formLogin" default-target-url="/admin/index"/>
-		
+		<intercept-url pattern="/peliculas/*"
+			access="hasAnyAuthority('EDITOR','GERENTE')" />
+		<intercept-url pattern="/horarios/*"
+			access="hasAnyAuthority('EDITOR','GERENTE')" />
+		<intercept-url pattern="/noticias/*"
+			access="hasAnyAuthority('EDITOR','GERENTE')" />
+		<intercept-url pattern="/horarios/*"
+			access="hasAnyAuthority('EDITOR','GERENTE')" />
+		<intercept-url pattern="/banners/*"
+			access="hasAnyAuthority('GERENTE')" />
+
+		<form-login login-page="/formLogin"
+			default-target-url="/admin/index" />
+
 	</http>
+
+	<!-- declaración de usuarios en memoria <authentication-manager> <authentication-provider> 
+		<user-service> noop significa que esta en texto plano, no encriptado <user 
+		name="luis" password="{noop}luis123" authorities="EDITOR" /> <user name="marisol" 
+		password="{noop}mari123" authorities="GERENTE" /> </user-service> </authentication-provider> 
+		</authentication-manager> -->
+	<!-- Autenticacion desde una base de datos -->
+
+	<!-- Bean para el Bcript -->
+	<b:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<!--Autenticacion desde una base de datos personalizada -->
+	
 	<authentication-manager>
-
 		<authentication-provider>
-			<user-service>
-				<!-- noop significa que esta en texto plano, no encriptado -->
-				<user name="luis" password="{noop}luis123" authorities="EDITOR" />
-				<user name="marisol" password="{noop}mari123"
-					authorities="GERENTE" />
-			</user-service>
+			<password-encoder ref="passwordEncoder"/>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select cuenta,pwd,activo from Usuarios where cuenta = ? "
+				authorities-by-username-query="select cuenta,perfil from Perfiles where cuenta = ? " />
 		</authentication-provider>
-
 	</authentication-manager>
+	
+	<!-- 
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource" />
+		</authentication-provider>
+	</authentication-manager> -->
 
 </b:beans>
