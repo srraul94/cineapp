@@ -2,6 +2,8 @@ package net.srraul94.app.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,18 @@ public class LoginController {
 	public String logout(HttpServletRequest request) {
 		SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 		logoutHandler.logout(request, null, null);
-		return "redirect:/login";
+		return "redirect:/formLogin";
+	}
+	
+	@GetMapping(value="/index")
+	public String mostrarPrincipalAdmin(Authentication authentication) {
+		System.out.println(authentication.getName());
+		
+		for(GrantedAuthority rol: authentication.getAuthorities()) {
+			System.out.println(rol.getAuthority());
+		}
+		
+		return "admin";
 	}
 
 }
